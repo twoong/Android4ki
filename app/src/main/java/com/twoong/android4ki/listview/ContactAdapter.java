@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.twoong.android4ki.R;
 
 import java.util.List;
@@ -54,7 +55,9 @@ public class ContactAdapter extends BaseAdapter{
         }
 
         Contact contact = (Contact) getItem(position);
-        holder.circleImageView.setImageResource(R.drawable.movie300);
+        //holder.circleImageView.setImageURI(Uri.parse(contact.getImageUri()));
+
+        Glide.with(parent.getContext()).load(contact.getImageUri()).into(holder.circleImageView);
         holder.nameTextView.setText(contact.getName());
 
         return convertView;
