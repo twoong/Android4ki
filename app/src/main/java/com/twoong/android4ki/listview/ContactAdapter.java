@@ -56,7 +56,6 @@ public class ContactAdapter extends BaseAdapter{
 
         Contact contact = (Contact) getItem(position);
         //holder.circleImageView.setImageURI(Uri.parse(contact.getImageUri()));
-
         Glide.with(parent.getContext()).load(contact.getImageUri()).into(holder.circleImageView);
         holder.nameTextView.setText(contact.getName());
 

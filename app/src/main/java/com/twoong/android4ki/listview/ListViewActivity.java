@@ -2,7 +2,8 @@ package com.twoong.android4ki.listview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ListView;
+import android.util.Log;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import com.twoong.android4ki.R;
@@ -18,14 +19,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ListViewActivity extends AppCompatActivity {
 
+    public static final String TAG = ListViewActivity.class.getSimpleName();
+
     private List<Contact> mData;
+    private GridView mGridstView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
 
-        final ListView listView = (ListView) findViewById(R.id.list_view);
+        //final ListView listView = (ListView) findViewById(R.id.list_view);
+        mGridstView = (GridView) findViewById(R.id.list_view);
 
         final ContactAdapter adapter = new ContactAdapter(mData);
         //listView.setAdapter(adapter);
@@ -46,11 +51,14 @@ public class ListViewActivity extends AppCompatActivity {
 
         Call<List<Contact>> contactCall = api.getContacts();
         contactCall.enqueue(new Callback<List<Contact>>() {
+
             @Override
             public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
                 List<Contact> data = response.body();
+
+                Log.d(TAG, "onResponse: data" + data);
                 mData = data;
-                listView.setAdapter(new ContactAdapter(data));
+                mGridstView.setAdapter(new ContactAdapter(data));
                 adapter.notifyDataSetChanged();
             }
 
@@ -60,6 +68,36 @@ public class ListViewActivity extends AppCompatActivity {
             }
         });
 
+        Log.d(TAG, "onCreate: ");
 
+/*
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            //세로
+            listView.setNumColumns(1);
+        } else {
+            //가로
+            listView.setNumColumns(2);
+        }
+*/
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Log.d(TAG, "onSaveInstanceState: ");
+
+        //저장
+        outState.putInt("position", mGridstView.getFirstVisiblePosition());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        Log.d(TAG, "onRestoreInstanceState: ");
+
+        //복원
+        mGridstView.setSelection(savedInstanceState.getInt("position"));
     }
 }

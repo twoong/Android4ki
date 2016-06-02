@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.twoong.android4ki.lifecycle.LifeCycleActivity;
 import com.twoong.android4ki.listview.ListViewActivity;
 
 /**
@@ -28,7 +29,8 @@ public class MainActivity extends AppCompatActivity{
 
         startActivity(intent);
     }
-    public void email(View view){
+
+    public void email(View view) {
 
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
@@ -42,5 +44,9 @@ public class MainActivity extends AppCompatActivity{
 
     public void listView(View view) {
         startActivity(new Intent(this, ListViewActivity.class));
+    }
+
+    public void lifeCycle(View view) {
+        startActivity(new Intent(this, LifeCycleActivity.class));
     }
 }
