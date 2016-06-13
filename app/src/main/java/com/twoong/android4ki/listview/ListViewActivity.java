@@ -22,7 +22,7 @@ public class ListViewActivity extends AppCompatActivity {
     public static final String TAG = ListViewActivity.class.getSimpleName();
 
     private List<Contact> mData;
-    private GridView mGridstView;
+    private GridView mGridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class ListViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_view);
 
         //final ListView listView = (ListView) findViewById(R.id.list_view);
-        mGridstView = (GridView) findViewById(R.id.list_view);
+        mGridView = (GridView) findViewById(R.id.list_view);
 
         final ContactAdapter adapter = new ContactAdapter(mData);
         //listView.setAdapter(adapter);
@@ -58,7 +58,7 @@ public class ListViewActivity extends AppCompatActivity {
 
                 Log.d(TAG, "onResponse: data" + data);
                 mData = data;
-                mGridstView.setAdapter(new ContactAdapter(data));
+                mGridView.setAdapter(new ContactAdapter(data));
                 adapter.notifyDataSetChanged();
             }
 
@@ -88,7 +88,7 @@ public class ListViewActivity extends AppCompatActivity {
         Log.d(TAG, "onSaveInstanceState: ");
 
         //저장
-        outState.putInt("position", mGridstView.getFirstVisiblePosition());
+        outState.putInt("position", mGridView.getFirstVisiblePosition());
     }
 
     @Override
@@ -98,6 +98,6 @@ public class ListViewActivity extends AppCompatActivity {
         Log.d(TAG, "onRestoreInstanceState: ");
 
         //복원
-        mGridstView.setSelection(savedInstanceState.getInt("position"));
+        mGridView.setSelection(savedInstanceState.getInt("position"));
     }
 }
