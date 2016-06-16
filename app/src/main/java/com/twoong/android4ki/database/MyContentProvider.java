@@ -35,8 +35,9 @@ public class MyContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Implement this to handle requests to delete one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+        return mDbHelper.getWritableDatabase().delete(FeedReaderContract.FeedEntry.TABLE_NAME,
+                selection,
+                selectionArgs);
     }
 
     @Override
@@ -54,8 +55,13 @@ public class MyContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        // TODO: Implement this to handle requests to insert a new row.
-        throw new UnsupportedOperationException("Not yet implemented");
+        long rowId = mDbHelper.getWritableDatabase().insert(FeedReaderContract.FeedEntry.TABLE_NAME,
+                null,
+                values);
+        if(rowId != -1) {
+            return uri;
+        }
+        return null;
     }
 
     @Override
@@ -94,7 +100,19 @@ public class MyContentProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        // TODO: Implement this to handle requests to update one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+        switch (sUriMatcher.match(uri)){
+            case ALL:
+                break;
+            case ITEM:
+                selection = "_id=" + ContentUris.parseId(uri);
+                selectionArgs = null;
+                break;
+            case UriMatcher.NO_MATCH:
+                return 0;
+        }
+        return mDbHelper.getWritableDatabase().update(FeedReaderContract.FeedEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
     }
 }

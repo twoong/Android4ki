@@ -2,7 +2,7 @@ package com.twoong.android4ki.database;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -33,22 +33,19 @@ public class DbActivity extends AppCompatActivity {
         findViewById(R.id.insert_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //삽입
-            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                //삽입
+                ContentValues values = new ContentValues();
+                values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_ENTRY_ID, mEntryId.getText().toString());
+                values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE, mTitle.getText().toString());
+                values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SUBTITLE, mSubtitle.getText().toString());
 
-            ContentValues values = new ContentValues();
-            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_ENTRY_ID, mEntryId.getText().toString());
-            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE, mTitle.getText().toString());
-            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SUBTITLE, mSubtitle.getText().toString());
-
-            long newRowId = db.insert(FeedReaderContract.FeedEntry.TABLE_NAME,
-                    null,
-                    values);
-            if (newRowId != -1) {
-                Toast.makeText(DbActivity.this, "정상 삽입", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(DbActivity.this, "삽입 에러", Toast.LENGTH_SHORT).show();
-            }
+                Uri checkUri = getContentResolver().insert(MyContentProvider.URI,
+                        values);
+                if (checkUri != null) {
+                    Toast.makeText(DbActivity.this, "정상 삽입", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DbActivity.this, "삽입 에러", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -56,22 +53,20 @@ public class DbActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //업데이트
-                SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
                 ContentValues values = new ContentValues();
                 values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE, mTitle.getText().toString());
                 values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SUBTITLE, mSubtitle.getText().toString());
 
                 String where = FeedReaderContract.FeedEntry.COLUMN_NAME_ENTRY_ID + "=?";
 
-                int updatedRow = db.update(FeedReaderContract.FeedEntry.TABLE_NAME,
+                int updatedRow = getContentResolver().update(MyContentProvider.URI,
                         values,
                         where,
                         new String[]{mEntryId.getText().toString()});
 
-                if(updatedRow != 0){
+                if (updatedRow != 0) {
                     Toast.makeText(DbActivity.this, "수정 되었습니다", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(DbActivity.this, "수정 에러", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -81,27 +76,24 @@ public class DbActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //삭제
-                SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
                 String where = FeedReaderContract.FeedEntry.COLUMN_NAME_ENTRY_ID + "=?";
 
-                int deletedRow = db.delete(FeedReaderContract.FeedEntry.TABLE_NAME,
+                int deletedRow = getContentResolver().delete(MyContentProvider.URI,
                         where,
-                        new String[] {mEntryId.getText().toString()});
+                        new String[]{mEntryId.getText().toString()});
 
-                if(deletedRow != 0){
+                if (deletedRow != 0) {
                     Toast.makeText(DbActivity.this, "삭제 되었습니다", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(DbActivity.this, "삭제 에러", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
         findViewById(R.id.query_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //query
                 Cursor cursor = getContentResolver().query(MyContentProvider.URI,
                         null,
                         null,
@@ -111,7 +103,7 @@ public class DbActivity extends AppCompatActivity {
                 // cursor 가 처음에 -1 번째를 가리키고 있기 때문에
                 //cursor.moveToFirst();
 
-                if(cursor != null) {
+                if (cursor != null) {
 
                     StringBuilder stringBuilder = new StringBuilder();
 
