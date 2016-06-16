@@ -35,9 +35,26 @@ public class MyContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return mDbHelper.getWritableDatabase().delete(FeedReaderContract.FeedEntry.TABLE_NAME,
+
+        switch (sUriMatcher.match(uri)){
+            case ALL:
+                break;
+            case ITEM:
+                selection = "_id=" + ContentUris.parseId(uri);
+                selectionArgs = null;
+                break;
+            case UriMatcher.NO_MATCH:
+                return 0;
+            //throw new UnsupportedOperationException("Not yet implemented");
+        }
+
+        int deletedRow = mDbHelper.getWritableDatabase().delete(FeedReaderContract.FeedEntry.TABLE_NAME,
                 selection,
                 selectionArgs);
+
+        //데이터 삭제됨을 통지
+        getContext().getContentResolver().notifyChange(uri, null);
+        return deletedRow;
     }
 
     @Override
@@ -59,7 +76,11 @@ public class MyContentProvider extends ContentProvider {
                 null,
                 values);
         if(rowId != -1) {
-            return uri;
+            Uri returnUri = ContentUris.withAppendedId(URI, rowId);
+
+            //데이터 추가됨을 통지
+            getContext().getContentResolver().notifyChange(returnUri, null);
+            return returnUri;
         }
         return null;
     }
@@ -110,9 +131,14 @@ public class MyContentProvider extends ContentProvider {
             case UriMatcher.NO_MATCH:
                 return 0;
         }
-        return mDbHelper.getWritableDatabase().update(FeedReaderContract.FeedEntry.TABLE_NAME,
+        int updatedRow = mDbHelper.getWritableDatabase().update(FeedReaderContract.FeedEntry.TABLE_NAME,
                 values,
                 selection,
                 selectionArgs);
+        if(updatedRow > 0){
+            //데이터 변경됨을 통지
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return updatedRow;
     }
 }
