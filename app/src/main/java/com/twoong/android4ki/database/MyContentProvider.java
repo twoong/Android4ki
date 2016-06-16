@@ -9,6 +9,8 @@ import android.net.Uri;
 
 public class MyContentProvider extends ContentProvider {
 
+
+
     // Creates a UriMatcher object.
     private static final UriMatcher sUriMatcher;
 
@@ -17,6 +19,8 @@ public class MyContentProvider extends ContentProvider {
     public static final String AUTHORITY = "com.twoong.android4ki.provider";
     public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.twoong.android4ki.provider." + FeedReaderContract.FeedEntry.TABLE_NAME;
     public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.twoong.android4ki.provider." + FeedReaderContract.FeedEntry.TABLE_NAME;
+
+    public static final Uri URI= Uri.parse("content://" + AUTHORITY + "/" + FeedReaderContract.FeedEntry.TABLE_NAME);
 
     static{
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
