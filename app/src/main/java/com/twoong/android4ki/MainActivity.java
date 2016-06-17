@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bindService(View view) {
-        if(mBound == false) {
+        if(!mBound) {
             bindService(new Intent(this, MyService.class), mConnection, BIND_AUTO_CREATE);
         }
     }
