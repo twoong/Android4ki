@@ -11,6 +11,7 @@ import android.view.View;
 import com.twoong.android4ki.database.DbActivity;
 import com.twoong.android4ki.lifecycle.LifeCycleActivity;
 import com.twoong.android4ki.listview.ListViewActivity;
+import com.twoong.android4ki.service.MyService;
 
 /**
  * Created by twoong on 2016. 5. 30..
@@ -53,5 +54,9 @@ public class MainActivity extends AppCompatActivity{
 
     public void DataBase(View view) {
         startActivity(new Intent(this, DbActivity.class));
+    }
+
+    public void service(View view) {
+        startService(new Intent(this, MyService.class));
     }
 }

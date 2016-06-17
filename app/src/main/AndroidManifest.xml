@@ -29,7 +29,12 @@
             android:name=".database.MyContentProvider"
             android:authorities="com.twoong.android4ki.provider"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true" />
+
+        <service
+            android:name=".service.MyService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
