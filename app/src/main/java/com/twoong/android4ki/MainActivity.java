@@ -11,6 +11,7 @@ import android.view.View;
 import com.twoong.android4ki.database.DbActivity;
 import com.twoong.android4ki.lifecycle.LifeCycleActivity;
 import com.twoong.android4ki.listview.ListViewActivity;
+import com.twoong.android4ki.service.MyIntentService;
 import com.twoong.android4ki.service.MyService;
 
 /**
@@ -58,5 +59,9 @@ public class MainActivity extends AppCompatActivity{
 
     public void service(View view) {
         startService(new Intent(this, MyService.class));
+    }
+
+    public void intentService(View view) {
+        startService(new Intent(this, MyIntentService.class));
     }
 }
