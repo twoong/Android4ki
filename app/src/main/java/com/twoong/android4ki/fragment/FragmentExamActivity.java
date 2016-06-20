@@ -1,7 +1,9 @@
 package com.twoong.android4ki.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.twoong.android4ki.R;
 
@@ -12,6 +14,23 @@ public class FragmentExamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_exam);
 
+        ColorFragment2 colorFragment2 = (ColorFragment2) getSupportFragmentManager().findFragmentById(R.id.color_frag);
 
+        colorFragment2.setOnMyClickListner(new ColorFragment2.OnClickMyListner() {
+            @Override
+            public void onClick(View clickedView, View colorChangeView) {
+                switch (clickedView.getId()) {
+                    case R.id.red_button:
+                        colorChangeView.setBackgroundColor(Color.RED);
+                        break;
+                    case R.id.green_button:
+                        colorChangeView.setBackgroundColor(Color.GREEN);
+                        break;
+                    case R.id.blue_button:
+                        colorChangeView.setBackgroundColor(Color.BLUE);
+                        break;
+                }
+            }
+        });
     }
 }
