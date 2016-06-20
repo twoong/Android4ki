@@ -17,7 +17,7 @@
             android:name=".SplashScreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:theme="@android:style/Theme.Black.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,8 +29,7 @@
         <activity
             android:name=".MainActivity"
             android:label="메인 액티비티"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity android:name=".listview.ListViewActivity" />
         <activity android:name=".lifecycle.LifeCycleActivity" />
         <activity android:name=".database.DbActivity" />
@@ -47,7 +46,9 @@
             android:exported="true" />
         <service
             android:name=".service.MyIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <activity android:name=".fragment.FragmentExamActivity"></activity>
     </application>
 
 </manifest>

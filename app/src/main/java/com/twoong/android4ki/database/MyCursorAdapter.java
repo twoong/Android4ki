@@ -15,7 +15,6 @@ import com.twoong.android4ki.R;
  */
 public class MyCursorAdapter extends CursorAdapter {
 
-
     public MyCursorAdapter(Context context, Cursor c) {
         super(context, c, false);
     }
@@ -39,8 +38,6 @@ public class MyCursorAdapter extends CursorAdapter {
         holder.titleTextView.setText(cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE)));
         holder.subtitleTextView.setText(cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_SUBTITLE)));
     }
-
-
 
     static class ViewHolder {
         TextView entryIdTextView;

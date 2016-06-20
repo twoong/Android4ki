@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.twoong.android4ki.database.DbActivity;
+import com.twoong.android4ki.fragment.FragmentExamActivity;
 import com.twoong.android4ki.lifecycle.LifeCycleActivity;
 import com.twoong.android4ki.listview.ListViewActivity;
 import com.twoong.android4ki.service.MyIntentService;
@@ -101,4 +102,8 @@ public class MainActivity extends AppCompatActivity {
             mBound = false;
         }
     };
+
+    public void colorFragment(View view) {
+        startActivity(new Intent(this, FragmentExamActivity.class));
+    }
 }
